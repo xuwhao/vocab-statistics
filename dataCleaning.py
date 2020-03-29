@@ -1,10 +1,18 @@
 import re
 import pattern.text.en as en
+import os
 
 path = "data/raw/"
 clean_path = "data/cleaning/"
 element_path = "data/element/"
 accomplish_path = "data/accomplish/"
+
+if not os.path.exists(clean_path):
+    os.mkdir(clean_path)
+if not os.path.exists(element_path):
+    os.mkdir(element_path)
+if not os.path.exists(accomplish_path):
+    os.mkdir(accomplish_path)
 
 stem = ["[^A-Za-z]", "[{IV}{V}{VI}{VII}{VIII}]"]
 

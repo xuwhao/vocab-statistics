@@ -4,10 +4,11 @@ import pattern.text.en as en
 class Vocabs:
     """单词数据集实体类"""
 
-    def __init__(self, name="", data=None, uri=None, lemma=True):
+    def __init__(self, name="", data=None, uri=None, lemma=False):
         self.name = name
         if data is not None:
-            if isinstance(data, list) or isinstance(data, tuple) or isinstance(data, dict) or isinstance(data, set):
+            if isinstance(data, list) or isinstance(data, tuple) \
+                    or isinstance(data, dict) or isinstance(data, set):
                 self.vocab_dict = dict(data)
                 self.size = len(self.vocab_dict)
         else:
