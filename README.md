@@ -13,7 +13,7 @@
 
 **【注】: 如有需要分析的数据欢迎提issue，寻求分析时请提供数据文件。如:xx年试题等。**
 ## 环境
-python: 3.6及以下版本  
+python:  3.6及以下版本  
 pattern：`conda install pattern` 或 `pip install pattern`   
 matplotlib
 
