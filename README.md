@@ -55,7 +55,7 @@ matplotlib
 ```
  # 函数原型
  # data[] 数据集的list，里面每一项是个字典, key依次为x, y, label(可空), 分别为x轴内容，y轴内容，该条线的标签
- # 举例 data[{'x':[1,2]},'y':[1,2],label='折线1'}, {'x':[1,2]},'y':[1,2],label='折线2'} ]
+ # 举例 data[{'x':[1,2],'y':[1,2],label='折线1'}, {'x':[1,2],'y':[1,2],label='折线2'} ]
  # 绘制多条线在一张图内时label最好不要省略
  # x_label, y_label x，y轴的名字 f_name保存的文件名以及图title, 会用'-'分割，分割出的数组的最后一个元素作为title
  # save 是否保存， img_size 图像大小， font_size 字体大小， x_gap x轴间隔，即步长
