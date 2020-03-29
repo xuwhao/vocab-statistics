@@ -1,82 +1,66 @@
 import re
 import pattern.text.en as en
 import os
+import constants as const
 
-path = "data/raw/"
-clean_path = "data/cleaning/"
-element_path = "data/element/"
-accomplish_path = "data/accomplish/"
-
-if not os.path.exists(clean_path):
-    os.mkdir(clean_path)
-if not os.path.exists(element_path):
-    os.mkdir(element_path)
-if not os.path.exists(accomplish_path):
-    os.mkdir(accomplish_path)
-
-stem = ["[^A-Za-z]", "[{IV}{V}{VI}{VII}{VIII}]"]
-
-simple_word = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
-               'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-               'u', 'v', 'w', 'x', 'y', 'z',
-               'have', 'and', 'the', 'of', 'to',
-               'and', 'in', 'a', 'is', 'were', 'was',
-               'you', 'I', 'he', 'his', 'there',
-               'those', 'she', 'her', 'their',
-               'that', 'them', 'or', 'for', 'as',
-               'are', 'on', 'it', 'be', 'with', 'by', 'have', 'from', 'not', 'they',
-               'more', 'but', 'an', 'at', 'we', 'has', 'can', 'this', 'your', 'which', 'will',
-               'one', 'should', 'points', 'all', 'than', 'what',
-               'people', 'if', 'been', 'its', 'new', 'our', 'would', 'part', 'may', 'some',
-               'who', 'answer', 'when', 'most', 'so', 'section', 'no', 'into', 'do', 'only',
-               'each', 'other', 'following', 'had', 'such', 'much', 'out', 'up', 'these',
-               'even', 'how', 'directions:', 'use', 'because', 'time', 'thi', '']
+if not os.path.exists(const.clean_path):
+    os.mkdir(const.clean_path)
+if not os.path.exists(const.element_path):
+    os.mkdir(const.element_path)
+if not os.path.exists(const.accomplish_path):
+    os.mkdir(const.accomplish_path)
 
 
-def clean_all(content=""):
-    for regex in stem:
-        content = re.sub(regex, " ", content)
-    return content
+def clean():
+    file_urls = os.listdir(const.path)
+    clean_data(file_urls)
+    word_element(file_urls)
+    get_lemma(file_urls)
 
 
-def clean_data(begin=2001, end=2001):
-    for i in range(begin, end + 1):
+def clean_data(file_urls=()):
+    for url in file_urls:
         result = list()
-        file = open(path + str(i) + ".txt", 'r', encoding='utf-8')
-        fp = open(clean_path + str(i) + ".txt", 'w', encoding='utf-8')
+        file = open(const.path + url, 'r', encoding='utf-8')
+        fp = open(const.clean_path + url, 'w', encoding='utf-8')
         for line in file:
-            result.append(clean_all(line))
+            result.append(clean_regex(line))
         file.close()
         fp.writelines([line + '\n' for line in result])
         fp.close()
 
 
-def word_element(begin=2001, end=2001):
-    for i in range(begin, end + 1):
+def word_element(file_urls=()):
+    for url in file_urls:
         result = list()
-        file = open(clean_path + str(i) + ".txt", 'r', encoding='utf-8')
-        fp = open(element_path + str(i) + ".txt", 'w', encoding='utf-8')
+        file = open(const.clean_path + url, 'r', encoding='utf-8')
+        fp = open(const.element_path + url, 'w', encoding='utf-8')
         for line in file:
             words = re.split(r'\s', line)
             for word in words:
                 if word.strip() != '':
                     s = en.lemma(word)
-                    if s not in simple_word:
+                    if s not in const.simple_word:
                         result.append(word + " " + s)
         file.close()
         fp.writelines([line + '\n' for line in result])
         fp.close()
 
 
-def get_lemma(begin=2001, end=2001):
-    for i in range(begin, end + 1):
+def get_lemma(file_urls=()):
+    for url in file_urls:
         result = list()
-        file = open(element_path + str(i) + ".txt", 'r', encoding='utf-8')
-        fp = open(accomplish_path + str(i) + ".txt", 'w', encoding='utf-8')
+        file = open(const.element_path + url, 'r', encoding='utf-8')
+        fp = open(const.accomplish_path + url, 'w', encoding='utf-8')
         for line in file:
             words = re.split(r'\s', line)
-            print(words)
             result.append(words[1])
         file.close()
         fp.writelines([line + '\n' for line in result])
         fp.close()
+
+
+def clean_regex(content=""):
+    for regex in const.stem:
+        content = re.sub(regex, " ", content)
+    return content

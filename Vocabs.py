@@ -30,3 +30,6 @@ class Vocabs:
                     self.vocab_dict[line] = 1
         self.size = len(self.vocab_dict)
         f.close()
+
+    def intersection(self, obj):
+        return self.vocab_dict.keys() & obj.vocab_dict.keys()
