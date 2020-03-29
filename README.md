@@ -28,4 +28,4 @@ matplotlib
 
 ### 样例结果
 
-![GEH2rV.png](https://s1.ax1x.com/2020/03/29/GEH2rV.png)
+![GEbxmV.png](https://s1.ax1x.com/2020/03/29/GEbxmV.png)
