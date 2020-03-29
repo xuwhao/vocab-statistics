@@ -18,6 +18,7 @@ matplotlib
 ```
 
 完成后，生成文件夹：   
+
 [![GEH9BT.jpg](https://s1.ax1x.com/2020/03/29/GEH9BT.jpg)](https://imgchr.com/i/GEH9BT)
 
 ### 载入分析
@@ -28,4 +29,4 @@ matplotlib
 
 ### 样例结果
 
-![GEbxmV.png](https://s1.ax1x.com/2020/03/29/GEbxmV.png)
+![GELab6.png](https://s1.ax1x.com/2020/03/29/GELab6.png)
