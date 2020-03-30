@@ -34,48 +34,29 @@ def words_per_year(vocabs_objs={}, begin=2001, end=2020):
     painter.line_chart(data, "年份", "单词数", "历年真题单词数(不含简单词汇)", img_size=(12, 6), x_gap=1)
 
 
-def book_hit_number(vocabs_objs={}, books=[], begin=2001, end=2020):
+def book_hit(vocabs_objs={}, books=[], begin=2001, end=2020):
     vocabs_list = get_by_year_from_all(vocabs_objs, begin, end)  # 所有年份的真题单词
-    data = []  # 最终结果集
+    data, data_rate = [], []  # 最终结果集
 
     # 每一本单词书和每一年真题做交集运算
     for book_name in books:  # 每一本单词书的名字
 
         book = vocabs_objs[book_name]  # 拿到这本单词书
-        x, y = [], []  # 每一本单词数的结果集(x, y, label)
+        x, y, y_rate = [], [], []  # 每一本单词数的结果集(x, y, label)
 
         # 拿到每一年的命中数量
         for vocab_year in vocabs_list:  # 拿到每一年的真题单词
             inter = vocab_year.intersection(book)  # 当年真题单词和单词书做交集运算
             x.append(vocab_year.name)  # 哪一年
             y.append(len(inter))  # 这一年命中的数量
+            y_rate.append(len(inter)/book.size)  # 命中/背诵
 
         # book.name书在x[i]年命中了y[i]个单词
         book_dict = {'x': x, 'y': y, 'label': book.name}
+        rate_dict = {'x': x, 'y': y_rate, 'label': book.name}
         data.append(book_dict)
+        data_rate.append(rate_dict)
 
-    painter.line_chart(data, "年份", "命中单词数", "词汇书分析-各单词书命中真题单词数", img_size=(12, 6))
+    painter.line_chart(data, "年份", "命中单词数", "词汇书分析-各单词书命中真题单词数", img_size=(14, 6))
+    painter.line_chart(data_rate, "年份", "命中单词数", "词汇书分析-背诵性价比", img_size=(14, 6))
 
-
-def book_hit_rate(vocabs_objs={}, books=[], begin=2001, end=2020):
-    vocabs_list = get_by_year_from_all(vocabs_objs, begin, end)  # 所有年份的真题单词
-    data = []  # 最终结果集
-
-    # 每一本单词书和每一年真题做交集运算
-    for book_name in books:  # 每一本单词书的名字
-
-        book = vocabs_objs[book_name]  # 拿到这本单词书
-        x, y = [], []  # 每一本单词数的结果集(x, y, label)
-
-
-        # 拿到每一年的命中数量
-        for vocab_year in vocabs_list:  # 拿到每一年的真题单词
-            inter = vocab_year.intersection(book)  # 当年真题单词和单词书做交集运算
-            x.append(vocab_year.name)  # 哪一年
-            y.append(len(inter)/book.size)  # 这一年命中的数量/背的数量
-
-        # book.name书在x[i]年命中了y[i]个单词
-        book_dict = {'x': x, 'y': y, 'label': book.name}
-        data.append(book_dict)
-
-    painter.line_chart(data, "年份", "命中单词数", "词汇书分析-背诵性价比", img_size=(12, 6))

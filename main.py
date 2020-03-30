@@ -13,5 +13,4 @@ vocab_objs = analysis.get_all_vocabs()
 books = ['5495大纲词汇', '恋练有词', '非常词汇']
 # analysis.book_hit_number(vocab_objs, books, 2001, 2020)
 
-analysis.book_hit_number(vocab_objs, books, 2001, 2020)
-analysis.book_hit_rate(vocab_objs, books, 2001, 2020)
+analysis.book_hit(vocab_objs, books, 2001, 2020)
