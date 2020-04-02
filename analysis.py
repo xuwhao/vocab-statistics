@@ -60,3 +60,18 @@ def book_hit(vocabs_objs={}, books=[], begin=2001, end=2020):
     painter.line_chart(data, "年份", "命中单词数", "词汇书分析-各单词书命中真题单词数", img_size=(14, 6))
     painter.line_chart(data_rate, "年份", "命中单词数", "词汇书分析-背诵性价比", img_size=(14, 6))
 
+
+def vocabs_using_situation(vocabs_objs={}, outlets_name='', begin=2001, end=2020):
+    vocab_list = get_by_year_from_all(vocabs_objs)
+    outlets = vocabs_objs[outlets_name]
+    used_set_list = []
+    used_result = set()
+    for vocabs in vocab_list:
+        used_vocabs = vocabs.intersection(outlets)
+        used_set_list.append(used_vocabs)
+    for used_set in used_set_list:
+        used_result = used_result | used_set
+    objs = dict()
+    objs['used_vocabs'] = Vocabs('used_vocabs', data=used_result)
+    objs['never_used_vocabs'] = Vocabs('never_used_vocabs', data=outlets.diff_section(objs['used_vocabs']))
+    return objs
