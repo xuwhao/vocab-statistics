@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy as np
 
 colors = ['r', '', 'b', "deeppink", "darkblue", "goldenrod"]
 markers = ['o', '+', '*', 'x', ',', '.']
@@ -7,7 +8,7 @@ img_path = "data/image/"
 
 
 # 绘制折线图
-def line_chart(data=[], x_label=[], y_label=[], f_name='', save=True, img_size=(8, 6), font_size=16, x_gap=1):
+def line_chart(data=[], x_label=[], y_label=[], f_name='', save=True, img_size=(12, 6), font_size=16, x_gap=1):
     plt.rcParams['font.sans-serif'] = ['SimHei']
     plt.rcParams['font.size'] = font_size
     titles = f_name.split('-')
@@ -19,7 +20,7 @@ def line_chart(data=[], x_label=[], y_label=[], f_name='', save=True, img_size=(
     plt.xlabel(x_label)
     plt.ylabel(y_label)
     miny, maxy = get_min(data), get_max(data)
-    plt.ylim(miny*0.85, maxy*1.18)
+    plt.ylim(miny * 0.85, maxy * 1.18)
     m_cnt, l_cnt, c_cnt, is_multi = 0, 0, 0, 0
     for dic in data:
         marker = markers[m_cnt]
@@ -42,6 +43,21 @@ def line_chart(data=[], x_label=[], y_label=[], f_name='', save=True, img_size=(
     if is_multi == 1:
         font = {'weight': 'normal', 'size': 10}
         plt.legend(loc=2, prop=font)
+    if save:
+        plt.savefig(img_path + f_name + '.png')
+    plt.show()
+
+
+def pie_chart(data=[], label=[], explode=[], f_name='', save=True, img_size=(12, 8), font_size=16):
+    plt.rcParams['font.sans-serif'] = 'SimHei'  # 设置中文显示
+    plt.rcParams['font.size'] = font_size  # 设置中文显示
+    plt.figure(figsize=img_size)  # 将画布设定为正方形，则绘制的饼图是正圆
+    if not explode:
+        explode = np.ones_like(data) * 0.01
+    explode = explode  # 设定各项距离圆心n个半径
+    plt.pie(data, explode=explode, labels=label, autopct='%1.1f%%')  # 绘制饼图
+    titles = f_name.split('-')
+    plt.title(titles[-1])  # 绘制标题
     if save:
         plt.savefig(img_path + f_name + '.png')
     plt.show()
